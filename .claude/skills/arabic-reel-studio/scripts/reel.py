@@ -292,7 +292,8 @@ def cmd_edit(video: str, brand: str | None) -> int:
     keep_hash = hashlib.sha1(json.dumps(keep).encode()).hexdigest()[:12]
     key_file = cache / f"transcript_cut_{keep_hash}.json"
     words_out = transcribe(src, wcfg["model"], wcfg["language"], key_file, cut_audio)
-    words_out = [w for w in words_out if w["s"] < main_dur - 0.05]
+    from rs_cut import refine_word_times
+    words_out = refine_word_times([w for w in words_out if w["s"] < main_dur - 0.05], cut_audio, 16000)
     for w in words_out:
         w["e"] = min(w["e"], main_dur)
     for old in cache.glob("transcript_cut_*.json"):

@@ -244,3 +244,16 @@ def map_time(t: float, keep: list[tuple[float, float]]) -> float | None:
 
 def kept_duration(keep: list[tuple[float, float]]) -> float:
     return sum(b - a for a, b in keep)
+
+
+def refine_word_times(words: list[dict], audio: np.ndarray, sr: int) -> list[dict]:
+    """Whisper stretches words over pauses. Pull word edges back to where the sound really is."""
+    runs, _ = silence_runs(frame_db(audio, sr), 0.10)
+    out = [dict(w) for w in words]
+    for a, b in runs:
+        for w in out:
+            if w["s"] < a < w["e"] and b >= w["e"] - 0.05:
+                w["e"] = max(w["s"] + 0.08, a + 0.04)       # word ends where the silence starts
+            if a <= w["s"] < b and w["e"] > b:
+                w["s"] = min(w["e"] - 0.08, max(w["s"], b - 0.03))  # word starts where sound returns
+    return out
