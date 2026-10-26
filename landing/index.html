@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>استوديو الريلز العربي</title>
+<meta name="description" content="أداة مجانية مع Claude Code: تعطيها فيديو تتكلم فيه وترجع لك ريل عمودي جاهز بترجمة عربية.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+<!-- Media files expected next to this page: media/before.mp4, media/after.mp4, media/cover.png -->
+<style>
+:root{
+  --bg:#ffffff; --surface:#f5f6f8; --ink:#15171c; --muted:#5d6470; --line:#e4e7ec; --accent:#2563eb; --accent-ink:#ffffff;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){ --bg:#0f1115; --surface:#181b21; --ink:#eceef2; --muted:#a2a9b4; --line:#2a2f37; --accent:#6c9dff; --accent-ink:#0f1115; }
+}
+:root[data-theme="dark"]{ --bg:#0f1115; --surface:#181b21; --ink:#eceef2; --muted:#a2a9b4; --line:#2a2f37; --accent:#6c9dff; --accent-ink:#0f1115; }
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans Arabic",system-ui,sans-serif;font-size:17px;line-height:1.75}
+main{max-width:880px;margin:0 auto;padding:0 16px}
+section{padding:40px 0;border-bottom:1px solid var(--line)}
+section:last-of-type{border-bottom:0}
+h1{font-size:2rem;line-height:1.3;margin:0 0 12px}
+h2{font-size:1.35rem;margin:0 0 16px}
+p{margin:0 0 12px}
+.lead{font-size:1.1rem;color:var(--muted)}
+.hero{padding-top:48px}
+.tag{display:inline-block;font-size:.85rem;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:2px 12px;margin-bottom:14px}
+.btn{display:inline-block;background:var(--accent);color:var(--accent-ink);text-decoration:none;font-weight:700;border:0;border-radius:12px;padding:12px 20px;font:inherit;font-weight:700;cursor:pointer}
+.btn:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.compare{display:grid;gap:16px;grid-template-columns:1fr}
+@media(min-width:640px){.compare{grid-template-columns:1fr 1fr}}
+figure{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:12px}
+figure video{display:block;width:100%;border-radius:10px;background:#000}
+.compare .before video{aspect-ratio:16/9}
+.compare .after video{aspect-ratio:9/16;max-height:560px;margin:0 auto;width:auto;max-width:100%}
+figcaption{font-size:.95rem;color:var(--muted);margin-top:8px}
+figcaption b{color:var(--ink)}
+ol.steps{list-style:none;padding:0;margin:0;counter-reset:s;display:grid;gap:12px}
+ol.steps li{counter-increment:s;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px 14px 16px;position:relative;padding-inline-start:56px}
+ol.steps li::before{content:counter(s);position:absolute;inset-inline-start:16px;top:14px;width:28px;height:28px;border-radius:50%;background:var(--ink);color:var(--bg);display:grid;place-items:center;font-weight:700;font-size:.9rem}
+.paste{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px}
+.paste code{display:block;font-family:inherit;font-size:1rem;line-height:1.8;word-break:break-word;margin-bottom:12px}
+.paste .url{direction:ltr;unicode-bidi:isolate}
+.copied{color:var(--muted);font-size:.9rem;margin-inline-start:10px}
+ul.list{padding-inline-start:20px;margin:0}
+ul.list li{margin-bottom:6px}
+.grid2{display:grid;gap:12px;grid-template-columns:1fr}
+@media(min-width:640px){.grid2{grid-template-columns:1fr 1fr}}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.box h3{margin:0 0 6px;font-size:1rem}
+.box p{margin:0;color:var(--muted);font-size:.95rem}
+footer{max-width:880px;margin:0 auto;padding:28px 16px 48px;color:var(--muted);font-size:.95rem}
+footer a{color:var(--ink);font-weight:700}
+.ltr{direction:ltr;unicode-bidi:isolate}
+</style>
+</head>
+<body>
+<main>
+  <section class="hero">
+    <span class="tag">أداة مجانية · مفتوحة المصدر</span>
+    <h1>استوديو الريلز العربي</h1>
+    <p class="lead">تعطيها فيديو تتكلم فيه، وترجع لك ريل عمودي جاهز: وقفات أقصر، بدون إعادات، وترجمة عربية واضحة. يشتغل على جهازك مع Claude Code، بدون حساب ولا اشتراك.</p>
+    <a class="btn" href="#install">طريقة التثبيت</a>
+  </section>
+
+  <section>
+    <h2>قبل وبعد</h2>
+    <div class="compare">
+      <figure class="before">
+        <video src="media/before.mp4" controls playsinline preload="metadata"></video>
+        <figcaption><b>قبل:</b> ٦١ ثانية فيها وقفات طويلة وجملة معادة مرتين.</figcaption>
+      </figure>
+      <figure class="after">
+        <video src="media/after.mp4" poster="media/cover.png" controls playsinline preload="metadata"></video>
+        <figcaption><b>بعد:</b> ٢٢ ثانية بترجمة كلمة بكلمة، وتقريب خفيف، وخاتمة باسمك.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section>
+    <h2>كيف تستخدمها</h2>
+    <ol class="steps">
+      <li>سوّ مجلد فاضي وافتحه في Claude Code.</li>
+      <li>الصق جملة التثبيت (تحت). Claude يثبّت كل شي بنفسه.</li>
+      <li>تنفتح صفحة إعداد: اسمك، معرّفك، الخط، الألوان، شكل الترجمة، والخاتمة.</li>
+      <li>حط فيديو تتكلم فيه داخل المجلد وقل: «عدّل الفيديو».</li>
+    </ol>
+  </section>
+
+  <section id="install">
+    <h2>جملة التثبيت</h2>
+    <div class="paste">
+      <code id="sentence">ثبّت لي استوديو الريلز العربي من <span class="url">https://github.com/YOUR-ACCOUNT/arabic-reel-studio</span> في هذا المجلد، واتبع قسم «التثبيت عن طريق Claude» في ملف README.</code>
+      <button class="btn" id="copy" type="button">انسخ الجملة</button><span class="copied" id="copied" aria-live="polite"></span>
+    </div>
+    <p style="margin-top:12px;color:var(--muted)">بعدها تقدر تقول: «كبّر الخط»، «شيل الزوم»، «قص أكثر»، «الترجمة فوق»، «غيّر اللون».</p>
+  </section>
+
+  <section>
+    <h2>وش تسوي الأداة</h2>
+    <div class="grid2">
+      <div class="box"><h3>قص نظيف</h3><p>تختصر الوقفات الطويلة وتحذف البدايات المتعثرة والإعادات، والقص دائماً داخل الصمت فلا تنقطع أي كلمة.</p></div>
+      <div class="box"><h3>ترجمة عربية صحيحة</h3><p>حروف متصلة واتجاه من اليمين لليسار، والكلمة المنطوقة تتلوّن. ثلاثة أشكال: كلمة بكلمة، سطرين، أو داخل صندوق.</p></div>
+      <div class="box"><h3>مقاس الريلز</h3><p>‏1080×1920 جاهز لانستقرام وتيك توك ويوتيوب شورتس، والترجمة بعيدة عن أزرار التطبيق.</p></div>
+      <div class="box"><h3>صوت مضبوط</h3><p>مستوى الصوت ‎-14 LUFS‎ مثل ما تطلبه المنصات، مع تقريب خفيف على الجمل المهمة.</p></div>
+      <div class="box"><h3>خاتمة وغلاف</h3><p>خاتمة فيها اسمك ومعرّفك، وغلاف cover.png بعنوان واضح.</p></div>
+      <div class="box"><h3>تقرير واضح</h3><p>ملف edits.txt يقول لك وش انقص ومن أي ثانية وليش.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>تحتاج</h2>
+    <ul class="list">
+      <li>جهاز ويندوز أو ماك، وClaude Code.</li>
+      <li>مساحة فاضية ٣ جيجا تقريباً.</li>
+      <li>إنترنت أول مرة فقط لتحميل البرامج والخطوط. بعدها يشتغل بدون إنترنت، وفيديوهاتك ما تطلع من جهازك.</li>
+    </ul>
+  </section>
+</main>
+<footer>
+  <p>الأداة مجانية برخصة MIT، والخطوط برخصة OFL.</p>
+  <p>تابعني على انستقرام <a class="ltr" href="https://www.instagram.com/anas.ai.ar/">@anas.ai.ar</a> لأدوات مجانية أكثر أبنيها بالذكاء الاصطناعي.</p>
+</footer>
+<script>
+document.getElementById("copy").addEventListener("click", async () => {
+  const text = document.getElementById("sentence").innerText.trim();
+  const note = document.getElementById("copied");
+  try { await navigator.clipboard.writeText(text); note.textContent = "نُسخت."; }
+  catch (e) {
+    const r = document.createRange(); r.selectNodeContents(document.getElementById("sentence"));
+    const s = getSelection(); s.removeAllRanges(); s.addRange(r); note.textContent = "اضغط نسخ من لوحة المفاتيح.";
+  }
+});
+</script>
+</body>
+</html>
