@@ -22,7 +22,7 @@
 2. الصق هذي الجملة:
 
 ```
-ثبّت لي استوديو الريلز العربي من https://github.com/YOUR-ACCOUNT/arabic-reel-studio في هذا المجلد، واتبع قسم «التثبيت عن طريق Claude» في ملف README.
+ثبّت لي استوديو الريلز العربي من https://github.com/veles98/arabic-reel-studio في هذا المجلد، واتبع قسم «التثبيت عن طريق Claude» في ملف README.
 ```
 
 3. بتنفتح صفحة الإعداد: اكتب اسمك ومعرّفك، واختر الخط والألوان وشكل الترجمة والخاتمة، واضغط «احفظ brand.json» واحفظه في نفس المجلد.
@@ -97,9 +97,9 @@ python3 .claude/skills/arabic-reel-studio/scripts/reel.py doctor
 (هذا القسم مكتوب لـ Claude Code. نفّذه خطوة خطوة، وكلّم المستخدم بالعربي وباختصار.)
 
 1. Put the repository into the current folder:
-   - If the folder is empty: `git clone https://github.com/YOUR-ACCOUNT/arabic-reel-studio .`
+   - If the folder is empty: `git clone https://github.com/veles98/arabic-reel-studio .`
    - If it is not empty: clone into a temporary sub-folder and move its contents (including `.claude/`) up into the current folder.
-   - If `git` is missing: download `https://github.com/YOUR-ACCOUNT/arabic-reel-studio/archive/refs/heads/main.zip`, extract it, and move the contents up the same way.
+   - If `git` is missing: download `https://github.com/veles98/arabic-reel-studio/archive/refs/heads/main.zip`, extract it, and move the contents up the same way.
 2. Check Python 3.9 or newer (`python --version`, on Mac `python3 --version`). If missing: Windows `winget install -e --id Python.Python.3.12`, Mac `brew install python`.
 3. Check ffmpeg (`ffmpeg -version`). If missing: Windows `winget install -e --id Gyan.FFmpeg`, Mac `brew install ffmpeg`. The scripts also find a fresh winget install before the terminal is reopened.
 4. `python -m pip install -r requirements.txt`
