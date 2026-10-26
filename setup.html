@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>إعداد استوديو الريلز العربي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@400;700&family=Noto+Kufi+Arabic:wght@700&family=Readex+Pro:wght@700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f5f7; --card:#ffffff; --ink:#16181d; --muted:#5f6672; --line:#e3e6eb; --soft:#eef0f3;
+  --focus:#2f6fec; --radius:14px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){ --bg:#111317; --card:#1a1d22; --ink:#eceef1; --muted:#a3a9b3; --line:#2b2f36; --soft:#22262c; --focus:#6b9bff; }
+}
+:root[data-theme="dark"]{ --bg:#111317; --card:#1a1d22; --ink:#eceef1; --muted:#a3a9b3; --line:#2b2f36; --soft:#22262c; --focus:#6b9bff; }
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans Arabic","Cairo",system-ui,sans-serif;line-height:1.6;font-size:16px}
+.wrap{max-width:1080px;margin:0 auto;padding:24px 16px 64px}
+header h1{font-size:1.6rem;margin:0 0 4px}
+header p{margin:0 0 20px;color:var(--muted)}
+.grid{display:grid;gap:20px}
+@media(min-width:900px){.grid{grid-template-columns:1fr 340px;align-items:start}.preview-col{position:sticky;top:16px}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px 18px 8px;margin-bottom:16px}
+.card h2{font-size:1.05rem;margin:0 0 12px}
+.field{margin-bottom:14px}
+.field>label,.label{display:block;font-weight:700;font-size:.92rem;margin-bottom:6px}
+.hint{color:var(--muted);font-size:.85rem;margin-top:4px}
+input[type=text]{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--soft);color:var(--ink);font:inherit}
+input[type=text]:focus,button:focus-visible,.opt input:focus-visible+span{outline:2px solid var(--focus);outline-offset:2px}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.opt{position:relative}
+.opt input{position:absolute;opacity:0;pointer-events:none}
+.opt span{display:block;padding:9px 14px;border:1px solid var(--line);border-radius:10px;background:var(--soft);cursor:pointer;font-size:.92rem}
+.opt input:checked+span{border-color:var(--ink);background:var(--card);box-shadow:inset 0 0 0 1px var(--ink)}
+.fonts .opt span{font-size:1.15rem;font-weight:700;min-width:140px;text-align:center}
+.swatches .opt span{display:flex;align-items:center;gap:8px}
+.chip{width:22px;height:22px;border-radius:50%;border:1px solid rgba(0,0,0,.15);display:inline-block}
+.custom{display:none;gap:12px;flex-wrap:wrap;margin-top:10px}
+.custom.on{display:flex}
+.custom label{display:flex;align-items:center;gap:6px;font-size:.88rem}
+input[type=color]{width:40px;height:30px;border:1px solid var(--line);border-radius:8px;padding:0;background:none}
+input[type=range]{width:100%}
+.switch{display:flex;align-items:center;gap:10px;cursor:pointer}
+.switch input{width:20px;height:20px}
+details summary{cursor:pointer;font-weight:700;margin-bottom:10px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 12px}
+button{font:inherit;font-weight:700;border-radius:10px;padding:11px 18px;cursor:pointer;border:1px solid var(--ink)}
+.primary{background:var(--ink);color:var(--card)}
+.ghost{background:transparent;color:var(--ink)}
+.note{background:var(--soft);border-radius:10px;padding:10px 12px;font-size:.9rem;color:var(--muted)}
+.ok{color:#1d8a4e;font-weight:700}
+/* preview phone */
+.phone{position:relative;width:100%;max-width:320px;aspect-ratio:9/16;margin:0 auto;border-radius:22px;overflow:hidden;
+  background:linear-gradient(160deg,#4a5866,#232b33 55%,#3b4652);border:1px solid var(--line)}
+.phone .shot{position:absolute;inset:0;background:
+  radial-gradient(circle at 50% 36%,rgba(255,255,255,.18),transparent 38%),
+  radial-gradient(circle at 50% 36%,rgba(0,0,0,.25) 0 9%,transparent 10%)}
+.cap{position:absolute;left:50%;transform:translate(-50%,-50%);text-align:center;white-space:nowrap;font-weight:700;line-height:1.35;direction:rtl}
+.cap .w{transition:color .08s}
+.cap.boxed .line{display:inline-block;padding:.08em .35em;border-radius:.18em}
+.ui{position:absolute;inset:0;pointer-events:none;display:none}
+.ui.on{display:block}
+.ui .bottom{position:absolute;left:0;right:0;bottom:0;height:18.7%;background:repeating-linear-gradient(45deg,rgba(255,80,80,.28) 0 6px,rgba(255,80,80,.12) 6px 12px)}
+.ui .side{position:absolute;right:0;top:48%;bottom:18.7%;width:12%;background:repeating-linear-gradient(45deg,rgba(255,80,80,.28) 0 6px,rgba(255,80,80,.12) 6px 12px)}
+.ui .top{position:absolute;left:0;right:0;top:0;height:9%;background:repeating-linear-gradient(45deg,rgba(255,80,80,.2) 0 6px,rgba(255,80,80,.08) 6px 12px)}
+.endcard{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center}
+.endcard.on{display:flex}
+.endcard .rule{width:17%;height:3px;border-radius:2px}
+.pvbtns{display:flex;gap:8px;justify-content:center;margin:12px 0 0;flex-wrap:wrap}
+.pvbtns button{padding:7px 12px;font-size:.85rem}
+textarea{width:100%;min-height:120px;font-family:ui-monospace,Consolas,monospace;font-size:.8rem;direction:ltr;border:1px solid var(--line);border-radius:10px;background:var(--soft);color:var(--ink);padding:8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>إعداد استوديو الريلز العربي</h1>
+  <p>اختر شكل الترجمة وألوانك مرة واحدة. تُحفظ الإعدادات في ملف <b>brand.json</b> ويستخدمها Claude في كل فيديو.</p>
+</header>
+
+<div class="grid">
+<main>
+  <section class="card">
+    <h2>١. هويتك</h2>
+    <div class="field"><label for="name">الاسم</label><input id="name" type="text" placeholder="مثال: سارة"></div>
+    <div class="field"><label for="handle">المعرّف</label><input id="handle" type="text" dir="ltr" placeholder="@yourname"></div>
+  </section>
+
+  <section class="card">
+    <h2>٢. الخط</h2>
+    <div class="row fonts" id="fonts"></div>
+    <p class="hint">كل الخطوط مجانية برخصة OFL من Google Fonts.</p>
+  </section>
+
+  <section class="card">
+    <h2>٣. الألوان</h2>
+    <div class="row swatches" id="presets"></div>
+    <div class="custom" id="custom">
+      <label>النص <input type="color" id="c_text"></label>
+      <label>الكلمة المنطوقة <input type="color" id="c_accent"></label>
+      <label>الحدّ والصندوق <input type="color" id="c_box"></label>
+      <label>خلفية الخاتمة <input type="color" id="c_endbg"></label>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>٤. الترجمة على الفيديو</h2>
+    <div class="field"><span class="label">الشكل</span>
+      <div class="row" id="style">
+        <label class="opt"><input type="radio" name="style" value="word" checked><span>كلمة بكلمة</span></label>
+        <label class="opt"><input type="radio" name="style" value="block"><span>سطرين</span></label>
+        <label class="opt"><input type="radio" name="style" value="boxed"><span>داخل صندوق</span></label>
+      </div></div>
+    <div class="field"><span class="label">المكان</span>
+      <div class="row" id="position">
+        <label class="opt"><input type="radio" name="position" value="upper"><span>أعلى</span></label>
+        <label class="opt"><input type="radio" name="position" value="middle"><span>الوسط</span></label>
+        <label class="opt"><input type="radio" name="position" value="lower" checked><span>أسفل (فوق أزرار انستقرام)</span></label>
+      </div></div>
+    <div class="field"><label for="size">حجم الخط: <b id="sizeval">92</b></label><input id="size" type="range" min="64" max="124" step="2" value="92"></div>
+    <div class="field"><span class="label">عدد الكلمات في كل ظهور</span>
+      <div class="row" id="maxw">
+        <label class="opt"><input type="radio" name="maxw" value="2"><span>٢</span></label>
+        <label class="opt"><input type="radio" name="maxw" value="3" checked><span>٣</span></label>
+        <label class="opt"><input type="radio" name="maxw" value="4"><span>٤</span></label>
+      </div></div>
+  </section>
+
+  <section class="card">
+    <h2>٥. الخاتمة</h2>
+    <div class="field"><label class="switch"><input type="checkbox" id="end_on" checked> أضف خاتمة في آخر الفيديو</label></div>
+    <div class="field"><label for="end_text">نص الخاتمة</label><input id="end_text" type="text" value="تابعني لأكثر"></div>
+  </section>
+
+  <section class="card">
+    <details>
+      <summary>خيارات المونتاج (اختياري)</summary>
+      <div class="field"><span class="label">قوة قص الصمت</span>
+        <div class="row" id="cutlevel">
+          <label class="opt"><input type="radio" name="cutlevel" value="light"><span>خفيف</span></label>
+          <label class="opt"><input type="radio" name="cutlevel" value="normal" checked><span>متوسط</span></label>
+          <label class="opt"><input type="radio" name="cutlevel" value="tight"><span>سريع</span></label>
+        </div></div>
+      <div class="field"><label class="switch"><input type="checkbox" id="retakes" checked> احذف البدايات المتعثرة والإعادات (يبقى آخر محاولة)</label></div>
+      <div class="field"><label class="switch"><input type="checkbox" id="zoom" checked> تقريب خفيف (زووم) على الجمل المهمة</label></div>
+      <div class="field"><span class="label">الفيديو الأفقي</span>
+        <div class="row" id="horiz">
+          <label class="opt"><input type="radio" name="horiz" value="blur" checked><span>كامل مع خلفية ضبابية</span></label>
+          <label class="opt"><input type="radio" name="horiz" value="smart"><span>قص ذكي</span></label>
+          <label class="opt"><input type="radio" name="horiz" value="center"><span>قص من المنتصف</span></label>
+        </div></div>
+      <div class="field"><span class="label">دقة التفريغ</span>
+        <div class="row" id="model">
+          <label class="opt"><input type="radio" name="model" value="medium" checked><span>أدق (أبطأ)</span></label>
+          <label class="opt"><input type="radio" name="model" value="small"><span>أسرع</span></label>
+        </div>
+        <p class="hint">«أدق» يحمّل نموذجاً حجمه نحو ١٫٥ جيجا أول مرة فقط.</p></div>
+    </details>
+  </section>
+
+  <section class="card">
+    <h2>٦. احفظ</h2>
+    <div class="btns">
+      <button class="primary" id="save">احفظ brand.json</button>
+      <button class="ghost" id="copy">انسخ الإعدادات</button>
+      <label class="ghost" style="border:1px solid var(--ink);border-radius:10px;padding:11px 18px;font-weight:700;cursor:pointer">افتح إعدادات سابقة<input type="file" id="load" accept=".json,application/json" hidden></label>
+    </div>
+    <p class="note" id="savehint">احفظ الملف داخل مجلد المشروع (نفس المجلد الذي فيه setup.html). إذا نزل في مجلد التنزيلات قل لـ Claude: «انقل brand.json من التنزيلات». ولو تعذّر الحفظ، اضغط «انسخ الإعدادات» والصقها لـ Claude.</p>
+    <p id="status" aria-live="polite"></p>
+    <details><summary>عرض الملف</summary><textarea id="json" readonly></textarea></details>
+  </section>
+</main>
+
+<aside class="preview-col">
+  <section class="card">
+    <h2>معاينة</h2>
+    <div class="phone" id="phone">
+      <div class="shot"></div>
+      <div class="cap" id="cap"></div>
+      <div class="endcard" id="endcard">
+        <div id="pv_name" style="font-weight:700"></div>
+        <div id="pv_handle" dir="ltr" style="font-weight:700"></div>
+        <div class="rule" id="pv_rule"></div>
+        <div id="pv_end" style="font-weight:700"></div>
+      </div>
+      <div class="ui" id="ui"><div class="top"></div><div class="side"></div><div class="bottom"></div></div>
+    </div>
+    <div class="pvbtns">
+      <button class="ghost" id="t_ui" aria-pressed="false">أظهر مناطق واجهة انستقرام</button>
+      <button class="ghost" id="t_end" aria-pressed="false">معاينة الخاتمة</button>
+    </div>
+    <p class="hint" style="text-align:center">المناطق المخططة تغطيها أزرار انستقرام؛ الترجمة تبقى خارجها.</p>
+  </section>
+</aside>
+</div>
+</div>
+
+<script>
+const FONTS = ["Cairo","Tajawal","IBM Plex Sans Arabic","Noto Kufi Arabic","Readex Pro"];
+const PRESETS = [
+  {id:"night",  name:"ليلي",   text:"#FFFFFF", accent:"#FFD23F", outline:"#101010", box:"#101010", end_bg:"#101010", end_text:"#FFFFFF"},
+  {id:"mint",   name:"نعناعي", text:"#FFFFFF", accent:"#3DDC97", outline:"#0B1F17", box:"#0B1F17", end_bg:"#0E2A20", end_text:"#FFFFFF"},
+  {id:"sky",    name:"سماوي",  text:"#FFFFFF", accent:"#4FC3F7", outline:"#0A1A2A", box:"#0A1A2A", end_bg:"#0D2236", end_text:"#FFFFFF"},
+  {id:"coral",  name:"مرجاني", text:"#FFFFFF", accent:"#FF6B6B", outline:"#1A0F10", box:"#1A0F10", end_bg:"#24141A", end_text:"#FFFFFF"},
+  {id:"violet", name:"بنفسجي", text:"#FFFFFF", accent:"#B69CFF", outline:"#140F24", box:"#140F24", end_bg:"#1B1530", end_text:"#FFFFFF"},
+  {id:"light",  name:"فاتح",   text:"#111111", accent:"#E4572E", outline:"#FFFFFF", box:"#FFFFFF", end_bg:"#F2F2F2", end_text:"#111111"},
+];
+const SAMPLE = "هذي طريقة سهلة تخلي فيديوهاتك أوضح وأقرب للناس".split(" ");
+const POS = {upper:540/1920, middle:0.5, lower:1300/1920};
+const CUT = {light:{keep_pause:0.35,min_silence:0.6}, normal:{keep_pause:0.22,min_silence:0.4}, tight:{keep_pause:0.12,min_silence:0.3}};
+const $ = id => document.getElementById(id);
+const radio = n => (document.querySelector(`input[name="${n}"]:checked`)||{}).value;
+let colors = {...PRESETS[0]}; let presetId = "night";
+
+// font options
+$("fonts").innerHTML = FONTS.map((f,i)=>`<label class="opt"><input type="radio" name="font" value="${f}" ${i===0?"checked":""}><span style="font-family:'${f}'">${f==="Cairo"?"القاهرة":f==="Tajawal"?"تجوال":f==="IBM Plex Sans Arabic"?"بلكس":f==="Noto Kufi Arabic"?"نوتو كوفي":"ريدكس"}<br><small style="font-family:system-ui;font-weight:400;font-size:.72rem;color:var(--muted)">${f}</small></span></label>`).join("");
+// colour presets
+$("presets").innerHTML = PRESETS.map((p,i)=>`<label class="opt"><input type="radio" name="preset" value="${p.id}" ${i===0?"checked":""}><span><i class="chip" style="background:${p.end_bg}"></i><i class="chip" style="background:${p.accent}"></i>${p.name}</span></label>`).join("")
+  + `<label class="opt"><input type="radio" name="preset" value="custom"><span>لون خاص</span></label>`;
+
+function syncPickers(){ $("c_text").value=colors.text; $("c_accent").value=colors.accent; $("c_box").value=colors.box; $("c_endbg").value=colors.end_bg; }
+syncPickers();
+
+function build(){
+  const cut = CUT[radio("cutlevel")||"normal"];
+  let handle = $("handle").value.trim().replace(/\s+/g,"");
+  if(handle && !handle.startsWith("@")) handle = "@"+handle;
+  return {
+    version:1,
+    name:$("name").value.trim(),
+    handle,
+    font:radio("font"),
+    preset:presetId,
+    colors:{text:colors.text, accent:colors.accent, outline:colors.outline, box:colors.box, end_bg:colors.end_bg, end_text:colors.end_text},
+    captions:{enabled:true, style:radio("style"), position:radio("position"), size:+$("size").value, max_words:+radio("maxw"), outline:5, shadow:true, strip_punctuation:true},
+    cut:{enabled:true, keep_pause:cut.keep_pause, min_silence:cut.min_silence, remove_retakes:$("retakes").checked, remove_fillers:true},
+    zoom:{enabled:$("zoom").checked, strength:1.08, every:6.0},
+    frame:{horizontal:radio("horiz")},
+    audio:{lufs:-14, true_peak:-1.5},
+    ending:{enabled:$("end_on").checked, text:$("end_text").value.trim()||"تابعني لأكثر", seconds:2.5},
+    cover:{enabled:true, title:""},
+    whisper:{model:radio("model"), language:"ar"},
+    export:{fps:30, crf:20, preset:"medium"}
+  };
+}
+
+let tick = 0, timer = null;
+function render(){
+  const b = build();
+  $("json").value = JSON.stringify(b,null,2);
+  $("sizeval").textContent = b.captions.size;
+  const phone = $("phone"), W = phone.clientWidth || 300, k = W/1080;
+  const cap = $("cap");
+  cap.style.fontFamily = `'${b.font}'`;
+  const n = b.captions.max_words, style = b.captions.style;
+  const per = style==="block" ? n*2 : n;
+  const chunks = []; for(let i=0;i<SAMPLE.length;i+=per) chunks.push(SAMPLE.slice(i,i+per));
+  const total = SAMPLE.length, idx = tick % total;
+  const ci = Math.floor(idx/per), active = idx%per, words = chunks[ci];
+  const fs = b.captions.size*(style==="block"?0.86:1)*k;
+  cap.style.fontSize = fs+"px";
+  cap.style.top = (POS[b.captions.position]*100)+"%";
+  cap.className = "cap"+(style==="boxed"?" boxed":"");
+  const stroke = Math.max(1, 5*k*1.6);
+  const lines = style==="block" && words.length>2 ? [words.slice(0,Math.ceil(words.length/2)), words.slice(Math.ceil(words.length/2))] : [words];
+  let w0 = 0;
+  cap.innerHTML = lines.map(ln=>{
+    const html = ln.map((w,j)=>`<span class="w" style="color:${(w0+j)===active?b.colors.accent:b.colors.text}">${w}</span>`).join(" ");
+    w0 += ln.length;
+    return style==="boxed" ? `<span class="line" style="background:${b.colors.box}">${html}</span>` : `<span class="line">${html}</span>`;
+  }).join("<br>");
+  if(style!=="boxed"){
+    const o = b.colors.outline;
+    cap.style.textShadow = `0 0 ${stroke}px ${o}, ${stroke}px 0 0 ${o}, -${stroke}px 0 0 ${o}, 0 ${stroke}px 0 ${o}, 0 -${stroke}px 0 ${o}, ${stroke*0.7}px ${stroke*0.7}px 0 ${o}, -${stroke*0.7}px -${stroke*0.7}px 0 ${o}, ${stroke*0.7}px -${stroke*0.7}px 0 ${o}, -${stroke*0.7}px ${stroke*0.7}px 0 ${o}, 0 ${3*k*2}px ${4*k}px rgba(0,0,0,.45)`;
+  } else cap.style.textShadow = "none";
+  // end card
+  const ec = $("endcard");
+  ec.style.background = b.colors.end_bg; ec.style.fontFamily = `'${b.font}'`;
+  $("pv_name").textContent = b.name; $("pv_name").style.cssText = `font-weight:700;color:${b.colors.end_text};font-size:${96*k}px`;
+  $("pv_handle").textContent = b.handle; $("pv_handle").style.cssText = `font-weight:700;color:${b.colors.accent};font-size:${62*k}px`;
+  $("pv_rule").style.background = b.colors.accent;
+  $("pv_end").textContent = b.ending.enabled ? b.ending.text : ""; $("pv_end").style.cssText = `font-weight:700;color:${b.colors.end_text};font-size:${70*k}px`;
+}
+function loop(){ tick++; render(); }
+timer = setInterval(loop, 420);
+
+document.addEventListener("input", e=>{
+  if(e.target.name==="preset"){
+    presetId = e.target.value;
+    $("custom").classList.toggle("on", presetId==="custom");
+    if(presetId!=="custom"){ colors = {...PRESETS.find(p=>p.id===presetId)}; syncPickers(); }
+  }
+  if(["c_text","c_accent","c_box","c_endbg"].includes(e.target.id)){
+    colors = {...colors, text:$("c_text").value.toUpperCase(), accent:$("c_accent").value.toUpperCase(), box:$("c_box").value.toUpperCase(), outline:$("c_box").value.toUpperCase(), end_bg:$("c_endbg").value.toUpperCase()};
+    const lum = h=>{const v=parseInt(h.slice(1),16);return (0.299*(v>>16)+0.587*((v>>8)&255)+0.114*(v&255))/255};
+    colors.end_text = lum(colors.end_bg) > 0.6 ? "#111111" : "#FFFFFF";
+  }
+  render();
+});
+$("t_ui").onclick = e=>{ const on=$("ui").classList.toggle("on"); e.target.setAttribute("aria-pressed",on); e.target.textContent = on?"أخفِ مناطق الواجهة":"أظهر مناطق واجهة انستقرام"; };
+$("t_end").onclick = e=>{ const on=$("endcard").classList.toggle("on"); e.target.setAttribute("aria-pressed",on); e.target.textContent = on?"معاينة الترجمة":"معاينة الخاتمة"; };
+
+function status(msg){ $("status").innerHTML = msg; }
+$("save").onclick = async ()=>{
+  const text = JSON.stringify(build(),null,2)+"\n";
+  if(window.showSaveFilePicker){
+    try{
+      const h = await window.showSaveFilePicker({suggestedName:"brand.json", types:[{description:"JSON",accept:{"application/json":[".json"]}}]});
+      const w = await h.createWritable(); await w.write(text); await w.close();
+      status('<span class="ok">تم الحفظ.</span> ارجع إلى Claude Code وقل: «عدّل الفيديو».'); return;
+    }catch(err){ if(err && err.name==="AbortError") return; }
+  }
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([text],{type:"application/json"}));
+  a.download = "brand.json"; document.body.appendChild(a); a.click(); a.remove();
+  status('<span class="ok">نزل الملف.</span> إذا كان في مجلد التنزيلات قل لـ Claude: «انقل brand.json من التنزيلات».');
+};
+$("copy").onclick = async ()=>{
+  const text = JSON.stringify(build(),null,2);
+  try{ await navigator.clipboard.writeText(text); status('<span class="ok">نُسخت الإعدادات.</span> الصقها لـ Claude وقل: «احفظها في brand.json».'); }
+  catch(e){ $("json").closest("details").open = true; $("json").select(); status("انسخ النص من المربع بالأسفل."); }
+};
+$("load").onchange = async e=>{
+  const f = e.target.files[0]; if(!f) return;
+  try{
+    const d = JSON.parse(await f.text());
+    $("name").value = d.name||""; $("handle").value = d.handle||"";
+    const set = (n,v)=>{ const el=document.querySelector(`input[name="${n}"][value="${v}"]`); if(el) el.checked=true; };
+    set("font", d.font); set("style", d.captions&&d.captions.style); set("position", d.captions&&d.captions.position);
+    set("maxw", d.captions&&d.captions.max_words); set("horiz", d.frame&&d.frame.horizontal); set("model", d.whisper&&d.whisper.model);
+    if(d.captions&&d.captions.size) $("size").value = d.captions.size;
+    if(d.ending){ $("end_on").checked = d.ending.enabled!==false; $("end_text").value = d.ending.text||""; }
+    if(d.cut){ $("retakes").checked = d.cut.remove_retakes!==false; const kp=d.cut.keep_pause; set("cutlevel", kp>=0.3?"light":kp<=0.15?"tight":"normal"); }
+    if(d.zoom) $("zoom").checked = d.zoom.enabled!==false;
+    if(d.colors){ colors = {...colors, ...d.colors}; presetId = d.preset||"custom"; set("preset", PRESETS.some(p=>p.id===presetId)?presetId:"custom"); $("custom").classList.toggle("on", presetId==="custom"); syncPickers(); }
+    status('<span class="ok">تم فتح الإعدادات.</span>'); render();
+  }catch(err){ status("الملف غير صالح."); }
+};
+window.addEventListener("resize", render);
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+fonts/
+out/
+tools/
+brand.json
+*.mp4
+*.mov
+*.m4v
+*.mkv
+*.webm
+*.wav
+*.m4a
+*.mp3
+__pycache__/
