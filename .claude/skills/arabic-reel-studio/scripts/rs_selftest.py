@@ -16,14 +16,20 @@ from rs_common import DEFAULTS, FONTS_DIR, deep_merge, ffmpeg_bin, font_manifest
 
 
 def rtl_ok(font: str = "Cairo") -> tuple[bool, str]:
+    ok1, d1 = _check(font, ["وعدتكم", "لو", "وصلنا"])
+    ok2, d2 = _check(font, ["Claude", "يكتب", "الكود"])   # a line that starts with a Latin word
+    return ok1 and ok2, f"{d1}; latin-first line: {d2}"
+
+
+def _check(font: str, first_three: list) -> tuple[bool, str]:
     import rs_captions as cap
     man = font_manifest()
     if font not in man:
         return False, "font not downloaded"
     cfg = deep_merge(DEFAULTS, {"colors": {"text": "#FFFFFF", "accent": "#FF0000"},
                                 "captions": {"outline": 0, "shadow": False}})
-    words = [{"w": "وعدتكم", "s": 0.0, "e": 0.5}, {"w": "لو", "s": 0.5, "e": 0.8},
-             {"w": "وصلنا", "s": 0.8, "e": 1.2}]
+    words = [{"w": first_three[0], "s": 0.0, "e": 0.5}, {"w": first_three[1], "s": 0.5, "e": 0.8},
+             {"w": first_three[2], "s": 0.8, "e": 1.2}]
     events = cap.build_events(words, cfg, 2.0)
     with tempfile.TemporaryDirectory() as td:
         tdp = Path(td)

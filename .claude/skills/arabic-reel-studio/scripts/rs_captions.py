@@ -6,6 +6,7 @@ from rs_common import hex_to_ass
 
 W, H = 1080, 1920
 SAFE_W = 760            # caption width limit: clear of the right-hand button column
+RLM = "\u200f"  # right-to-left mark: keeps lines RTL even when they start with a Latin word
 POS_Y = {"upper": 540, "middle": 960, "lower": 1300}   # centre line; IG bottom UI starts ~1560
 
 
@@ -99,7 +100,7 @@ def _line_text(ws: list[dict], active: int | None, text_c: str, accent_c: str) -
             parts.append("{\\c" + accent_c + "}" + w["t"] + "{\\c" + text_c + "}")
         else:
             parts.append(w["t"])
-    return " ".join(parts)
+    return RLM + " ".join(parts)
 
 
 def _fit_scale(text_plain: str, size: float) -> str:
@@ -181,7 +182,7 @@ def end_card_events(cfg: dict, t0: float, dur: float) -> list[str]:
     text = (e.get("text") or "").strip()
     y = 820 if name else 900
     if name:
-        out.append(f"Dialogue: 2,{a},{b},End,,0,0,0,,{{\\an5\\move(540,{y + 30},540,{y},0,350)\\fad(250,0)}}{name}")
+        out.append(f"Dialogue: 2,{a},{b},End,,0,0,0,,{{\\an5\\move(540,{y + 30},540,{y},0,350)\\fad(250,0)}}{RLM}{name}")
         y += 120
     if handle:
         out.append(f"Dialogue: 2,{a},{b},End,,0,0,0,,{{\\an5\\pos(540,{y})\\fs62\\c{accent}\\fad(350,0)}}‎{handle}")
@@ -191,7 +192,7 @@ def end_card_events(cfg: dict, t0: float, dur: float) -> list[str]:
                "m -90 -3 l 90 -3 l 90 3 l -90 3{\\p0}")
     y += 90
     if text:
-        out.append(f"Dialogue: 2,{a},{b},End,,0,0,0,,{{\\an5\\pos(540,{y})\\fs70\\fad(500,0)}}{text}")
+        out.append(f"Dialogue: 2,{a},{b},End,,0,0,0,,{{\\an5\\pos(540,{y})\\fs70\\fad(500,0)}}{RLM}{text}")
     return out
 
 
@@ -211,7 +212,7 @@ def cover_events(cfg: dict, title: str) -> list[str]:
     scale = "" if est <= 860 else f"\\fscx{int(100 * 860 / est)}\\fscy{int(100 * 860 / est)}"
     accent = hex_to_ass(cfg["colors"]["accent"])
     # last line in the accent colour gives the title a clear focal word group
-    body = lines[0] if len(lines) == 1 else lines[0] + "\\N{\\c" + accent + "}" + lines[1]
+    body = RLM + lines[0] if len(lines) == 1 else RLM + lines[0] + "\\N{\\c" + accent + "}" + RLM + lines[1]
     ev = [f"Dialogue: 1,0:00:00.00,0:00:10.00,{style},,0,0,0,,{{\\an5\\pos(540,900){scale}}}{body}"]
     handle = (cfg.get("handle") or "").strip()
     if handle:
